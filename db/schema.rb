@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_010521) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.string "password_digest"
     t.string "location"
     t.float "trade_completion"
     t.integer "trade_slots"

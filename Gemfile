@@ -26,11 +26,21 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
+
+gem 'cancancan'
+gem "selectize-rails"
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
+gem 'active_model_serializers'
+gem 'dry-validation'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'hirb'
 end
 
 group :development do
