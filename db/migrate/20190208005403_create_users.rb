@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :location
       t.float :trade_completion
       t.integer :trade_slots
+      t.string :status
 
       t.timestamps
     end

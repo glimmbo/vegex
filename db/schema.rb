@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_010521) do
     t.string "location"
     t.float "trade_completion"
     t.integer "trade_slots"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
