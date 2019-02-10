@@ -3,6 +3,8 @@ class UserSerializer < ActiveModel::Serializer
     :id,
     :name,
     :email,
+    :password,
+    :password_confirmation,
     :location,
     :trade_completion,
     :trade_slots,

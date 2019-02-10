@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   resource :session, only: [:create, :destroy]
 
-  resources :users
+  resources :users, except: [:new, :edit] do
+    get :current, on: :collection
+    resources :trades, except: [:new, :edit]
+  end
 
-  resources :trades
+
+  
 end

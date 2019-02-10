@@ -34,5 +34,20 @@ module Vegex
 
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_vegex_session', expire_after: 30.days
+
+    config.middleware.insert_before(0, Rack::Cors) do
+      allow do
+        origins "localhost:3001", "127.0.0.1:3001"
+        # "origins" specifies which domains are allowed to make AJAX
+        # requests to this server. "*" means everyone and should normally not
+        # by used.
+        resource(
+          "*",
+          headers: :any,
+          credentials: true,
+          methods: [:get, :post, :delete, :patch, :put, :options]
+        )
+      end
+    end
   end
 end
