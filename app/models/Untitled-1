@@ -1,7 +1,3 @@
-class Trade < ApplicationRecord
-  has_one :user
-
-  include AASM
   aasm whiny_transitions: false do
     state :open, initial: true
     state :barter, :pending, :complete, :cancelled
@@ -23,11 +19,15 @@ class Trade < ApplicationRecord
     end
   end
 
-  def self.open
-    where(aasm_state: [:open])
-  end
+    aasm whiny_transitions: false do
+    state :active, initial: true
+    state :on_hold, :deleted
 
-  def self.closed
-    where(aasm_state: [:pending, :cancelled, :complete])
+    event :delete do
+      transition from: [:active, :on_hold], to: :deleted
+    end
+
+    event :hold do
+      transition from: :active, to: :on_hold
+    end
   end
-end

@@ -10,22 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_08_010521) do
+ActiveRecord::Schema.define(version: 2019_02_12_051453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "trade_events", force: :cascade do |t|
-    t.string "type", null: false
-    t.integer "trade_id", null: false
-    t.text "data", null: false
-    t.text "metadata", null: false
-    t.datetime "created_at", null: false
-    t.index ["trade_id"], name: "index_trade_events_on_trade_id"
-  end
-
   create_table "trades", force: :cascade do |t|
-    t.string "phase"
     t.integer "user_id"
     t.string "produce"
     t.integer "quantity"
@@ -34,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_02_08_010521) do
     t.integer "offer_quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aasm_state"
   end
 
   create_table "users", force: :cascade do |t|
@@ -41,11 +32,12 @@ ActiveRecord::Schema.define(version: 2019_02_08_010521) do
     t.string "email"
     t.string "password_digest"
     t.string "location"
+    t.text "about"
     t.float "trade_completion"
     t.integer "trade_slots"
-    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aasm_state"
   end
 
 end

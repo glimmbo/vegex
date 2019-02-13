@@ -3,6 +3,7 @@ class UserSerializer < ActiveModel::Serializer
     :id,
     :name,
     :email,
+    :about,
     :password,
     :password_confirmation,
     :location,

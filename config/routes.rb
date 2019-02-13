@@ -5,7 +5,12 @@ Rails.application.routes.draw do
 
   resources :users, except: [:new, :edit] do
     get :current, on: :collection
-    resources :trades, except: [:new, :edit]
+    # resources :my_trades, except: [:new, :edit]
+  end
+
+  resources :trades do
+    get :open, on: :collection # /offers
+    get :my, on: :collection # /my_trades
   end
 
 

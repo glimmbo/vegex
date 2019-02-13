@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::API
-  # skip_before_action(:verify_authenticity_token) not present in --api?
-  # security measure unneccessary for API
 
   rescue_from(StandardError, with: :standard_error)
   rescue_from(ActiveRecord::RecordNotFound, with: :record_not_found)

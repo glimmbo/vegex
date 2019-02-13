@@ -1,9 +1,14 @@
 class TradesController < ApplicationController
 
-  def index
-    byebug
-    p current_user
-    trades = Trade.all.where(`user_id = #{current_user.id}`)
+  def index # offers page
+    trades = Trade.open
+    render json: {
+      trades: trades
+    }, status: 200
+  end
+
+  def my # active trades
+    trades = Trade.where({user_id: current_user.id, aasm_state: [:open, :barter, :pending]})
     render json: {
       trades: trades
     }, status: 200
@@ -11,7 +16,6 @@ class TradesController < ApplicationController
 
   def create
     trade = Trade.new
-    trade.phase = "open"
     trade.user_id = current_user.id
     trade.produce = params[:produce]
     trade.quantity = params[:quantity]
