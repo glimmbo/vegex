@@ -2,12 +2,14 @@ class UsersController < ApplicationController
   # before_action :authenticate_user! except: [:create, :current]
 
   def index
-    # stretch: an index of users located within radius preferrence?
+    users = User.nearbys(current_user.range) #geocoder method
   end
 
   def show
-    # user's profile page or
-    # current trade partner (:offer_user_id)
+    user = current_user
+    render json: {
+      user: user
+    }, status: 200
   end
 
   def create
@@ -29,7 +31,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    # soft delete, add migration for user :status
+    user = User.find(current_user)
+    user.remove
+    render json: {
+
+    }, status: 200
   end
 
   def current

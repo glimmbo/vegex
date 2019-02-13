@@ -1,7 +1,7 @@
 class TradesController < ApplicationController
 
   def index # offers page
-    trades = Trade.open
+    trades = Trade.where({user_id: !current_user.id, aasm_state: [:open, :barter]})
     render json: {
       trades: trades
     }, status: 200
@@ -31,6 +31,7 @@ class TradesController < ApplicationController
   end
 
   def update
+    # separate actions for:
     # quantity changes (by either)
     # offer_user enter/leave
     # 

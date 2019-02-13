@@ -31,10 +31,13 @@ ActiveRecord::Schema.define(version: 2019_02_12_051453) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.string "location"
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
+    t.integer "range"
     t.text "about"
-    t.float "trade_completion"
-    t.integer "trade_slots"
+    t.float "completion"
+    t.integer "slots"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "aasm_state"

@@ -4,10 +4,13 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :email
       t.string :password_digest
-      t.string :location
+      t.string :address
+      t.float :latitude
+      t.float :longitude
+      t.integer :range
       t.text :about
-      t.float :trade_completion
-      t.integer :trade_slots
+      t.float :completion
+      t.integer :slots
 
       t.timestamps
     end
