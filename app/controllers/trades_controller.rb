@@ -1,7 +1,8 @@
 class TradesController < ApplicationController
+  before_action :authenticate_user!
 
-  def index # offers page
-    trades = Trade.where({user_id: !current_user.id, aasm_state: [:open, :barter]})
+  def index # offers page (change to open trades)
+    trades = Trade.available.where({user_id: !current_user.id})
     render json: {
       trades: trades
     }, status: 200
@@ -14,7 +15,7 @@ class TradesController < ApplicationController
     }, status: 200
   end
 
-  def create
+  def create # √ √
     trade = Trade.new
     trade.user_id = current_user.id
     trade.produce = params[:produce]
@@ -38,6 +39,7 @@ class TradesController < ApplicationController
   end
 
   def destroy
-    
+    # cancel a trade
   end
+
 end

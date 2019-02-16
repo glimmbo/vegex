@@ -1,24 +1,32 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :trades
-  include AASM
+  has_many :offers
+  
+  geocoded_by :address
+  after_validation :geocode, :if => :address_changed?
 
+  include AASM
   aasm whiny_transitions: false do
     state :active, initial: true
-    state :on_hold, :removed
+    state :removed
 
     event :remove do
-      transitions from: [:active, :on_hold], to: :removed
-    end
-
-    event :hold do
-      transitions from: :active, to: :on_hold
+      transitions from: :active, to: :removed
     end
   end
 
-  validates :email, presence: true,
-  uniqueness: true,
-  format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  validates(
+    :email,
+    presence: true,
+    uniqueness: true,
+    format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  )
 
+  validates(
+    :name,
+    presence: true,
+    uniqueness: true
+  )
 
 end

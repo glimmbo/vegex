@@ -1,7 +1,7 @@
 class CreateTrades < ActiveRecord::Migration[5.2]
   def change
     create_table :trades do |t|
-      t.integer :user_id
+      t.references :user
       t.string :produce
       t.integer :quantity
       t.integer :offer_user_id

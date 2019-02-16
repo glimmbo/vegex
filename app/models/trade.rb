@@ -1,5 +1,7 @@
 class Trade < ApplicationRecord
   belongs_to :user
+  has_many :offers
+  has_one :partner, through: :offers, source: :users
 
   include AASM
   aasm whiny_transitions: false do
@@ -31,8 +33,8 @@ class Trade < ApplicationRecord
     end
   end
 
-  def self.available
-    where(aasm_state: [:open, :barter])
+  def self.available #stretch: include :barter and a wait list
+    where(aasm_state: [:open])
   end
 
   def self.closed

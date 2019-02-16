@@ -4,12 +4,12 @@ class UserSerializer < ActiveModel::Serializer
     :name,
     :email,
     :about,
-    :password,
-    :password_confirmation,
-    :location,
-    :trade_completion,
-    :trade_slots,
-    :status,
+    :address,
+    :latitude,
+    :longitude,
+    :completion,
+    :slots,
+    :aasm_state,
     :created_at,
     :updated_at
   )
