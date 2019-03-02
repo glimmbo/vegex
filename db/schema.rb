@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_16_011510) do
+ActiveRecord::Schema.define(version: 2019_02_20_182846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_011510) do
     t.string "aasm_state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "distance"
     t.index ["trade_id"], name: "index_offers_on_trade_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end

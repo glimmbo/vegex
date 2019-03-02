@@ -5,46 +5,183 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.all.destroy
-Trade.all.destroy
+
+User.destroy_all
+Trade.destroy_all
+Offer.destroy_all
 
 pass = "pass"
 
-superuser = User.create(
+addresses = [
+  "2255 York Ave, Vancouver, BC",
+  "2186 Lawson Ave, West Vancouver, BC",
+  "1101 Gordon Ave, West Vancouver, BC",
+  "1199 Lynn Valley Rd, North Vancouver, BC",
+  "1532 Salal Crescent, Coquitlam, BC",
+  "7303 Montecito Dr, Burnaby, BC",
+  "3451 Regent St, Richmond, BC",
+  "9088 Jones Rd, Richmond, BC",
+  "5998 131a St, Surrey, BC",
+  "2598 Kitchener St, Vancouver, BC",
+  "100 W 15th Ave, Vancouver, BC",
+  "32470 Haida Dr, Abbotsford, BC",
+  "6565 Greenmount St, Chilliwack, BC"
+]
+
+User.create(
   name: "Mark",
   email: "markglimm@gmail.com",
   password: pass,
   password_confirmation: pass,
-  location: "Kelowna",
-  about: "I was a farmer, now I'm a webdev? but I still grow stuff",
-  trade_completeion: "90",
-  trade_slots: "3",
-  status: "active"
+  address: "2725 Prince Edward Street, Vancouver, BC",
+  about: "I was once an urban farmer, now I'm growing my skills as a web developer. Still passionate for produce and love to trade here on Vegex",
+  completion: 100,
+  slots: 10
 )
-
-15.times do
+addresses.each do
   name = Faker::Name.first_name
-  email = `#{name}@example.com`
+  email = "#{name}#{rand(1..5)}@example.com"
   User.create(
     name: name,
     email: email,
     password: pass,
     password_confirmation: pass,
-    location: ["Kelowna", "Vancouver", "Hope", "Abbotsford", "Vernon", "Penticton", "Langley"].sample,
-    about: "about content",
-    trade_completeion: [50,60,75,85,90,100].sample,
-    trade_slots: [1,2,3].sample,
+    address: addresses.pop,
+    about: Faker::Hipster.paragraph,
+    completion: rand(50..100),
+    slots: 1
   )
 end
 
 users = User.all
-
-75.times do
+veg = [
+  "acorn squash",
+  "alfalfa sprout",
+  "amaranth",
+  "anise",
+  "artichoke",
+  "arugula",
+  "asparagus",
+  "aubergine",
+  "azuki bean",
+  "banana squash",
+  "basil",
+  "bean sprout",
+  "beet",
+  "black bean",
+  "black-eyed pea",
+  "bok choy",
+  "borlotti bean",
+  "broad beans",
+  "broccoflower",
+  "broccoli",
+  "brussels sprout",
+  "butternut squash",
+  "cabbage",
+  "calabrese",
+  "caraway",
+  "carrot",
+  "cauliflower",
+  "cayenne pepper",
+  "celeriac",
+  "celery",
+  "chamomile",
+  "chard",
+  "chayote",
+  "chickpea",
+  "chives",
+  "cilantro",
+  "collard green",
+  "corn",
+  "corn salad",
+  "courgette",
+  "cucumber",
+  "daikon",
+  "delicata",
+  "dill",
+  "eggplant",
+  "endive",
+  "fennel",
+  "fiddlehead",
+  "frisee",
+  "garlic",
+  "gem squash",
+  "ginger",
+  "green bean",
+  "green pepper",
+  "habanero",
+  "herbs and spice",
+  "horseradish",
+  "hubbard squash",
+  "jalapeno",
+  "jerusalem artichoke",
+  "jicama",
+  "kale",
+  "kidney bean",
+  "kohlrabi",
+  "lavender",
+  "leek ",
+  "legume",
+  "lemon grass",
+  "lentils",
+  "lettuce",
+  "lima bean",
+  "mamey",
+  "mangetout",
+  "marjoram",
+  "mung bean",
+  "mushroom",
+  "mustard green",
+  "navy bean",
+  "new zealand spinach",
+  "nopale",
+  "okra",
+  "onion",
+  "oregano",
+  "paprika",
+  "parsley",
+  "parsnip",
+  "patty pan",
+  "pea",
+  "pinto bean",
+  "potato",
+  "pumpkin",
+  "radicchio",
+  "radish",
+  "rhubarb",
+  "rosemary",
+  "runner bean",
+  "rutabaga",
+  "sage",
+  "scallion",
+  "shallot",
+  "skirret",
+  "snap pea",
+  "soy bean",
+  "spaghetti squash",
+  "spinach",
+  "squash ",
+  "sweet potato",
+  "tabasco pepper",
+  "taro",
+  "tat soi",
+  "thyme",
+  "topinambur",
+  "tubers",
+  "turnip",
+  "wasabi",
+  "water chestnut",
+  "watercress",
+  "white radish",
+  "yam",
+  "zucchini"
+]
+lessveg = ["carrots", "lettuce", "potatoes", "kale", "mushrooms", "tomatoes", "broccoli", "celery"]
+users.each do |user|
   Trade.create(
-    user_id: users.sample.id,
-    produce: ["Carrot", "Lettuce", "Kale", "Radish", "Potato", "Tomatoe", "Squash", "Green", "Beet", "Apple", "Pear"].sample,
-    quantity: rand(100..10000),
-    offer_user_id: users.sample.id,
-    offer_produce: ["Carrot", "Lettuce", "Kale", "Radish", "Potato", "Tomatoe", "Squash", "Green", "Beet", "Apple", "Pear"].sample,
-    offer_quantity:
+    user_id: user.id,
+    produce: lessveg.sample
   )
+end
+
+puts "Created #{User.count} users | #{Trade.count} trades"

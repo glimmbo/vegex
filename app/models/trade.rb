@@ -1,7 +1,6 @@
 class Trade < ApplicationRecord
   belongs_to :user
-  has_many :offers
-  has_one :partner, through: :offers, source: :users
+  has_many :offers, dependent: :destroy
 
   include AASM
   aasm whiny_transitions: false do
@@ -16,7 +15,7 @@ class Trade < ApplicationRecord
       transitions from: :open, to: :barter
     end
 
-    event :leave do # offer_user leaves trade
+    event :leave do # offer_user leaves trade (offer#destroy)
       transitions from: :barter, to: :open
     end
 
@@ -33,7 +32,7 @@ class Trade < ApplicationRecord
     end
   end
 
-  def self.available #stretch: include :barter and a wait list
+  def self.available
     where(aasm_state: [:open])
   end
 

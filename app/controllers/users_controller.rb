@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # before_action :authenticate_user! except: [:create, :current]
 
-  def index #later
+  def index #later, not needed
     # if current_user.range
     #   users = current_user.nearbys(current_user.range)
     #   render json: {
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
   def set_ip_address(user)
     if user.address.length == 0 || user.address == nil
       user.address = "50.64.108.159"
-      # user.address = request.remote_ip
+      # user.address = request.remote_ip (once hosted)
     end
   end
 

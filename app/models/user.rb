@@ -29,4 +29,8 @@ class User < ApplicationRecord
     uniqueness: true
   )
 
+  def slot_available
+    trades.where(aasm_state: [:open, :barter, :pending]).count < slots ? true : false
+  end
+
 end
