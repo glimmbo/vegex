@@ -13,20 +13,22 @@ Offer.destroy_all
 pass = "pass"
 
 addresses = [
-  "2255 York Ave, Vancouver, BC",
-  "2186 Lawson Ave, West Vancouver, BC",
-  "1101 Gordon Ave, West Vancouver, BC",
-  "1199 Lynn Valley Rd, North Vancouver, BC",
+  "2255 York Avenue, Vancouver, BC",
+  "2186 Lawson Avenue, West Vancouver, BC",
+  "1101 Gordon Avenue, West Vancouver, BC",
+  "1199 Lynn Valley Road, North Vancouver, BC",
   "1532 Salal Crescent, Coquitlam, BC",
-  "7303 Montecito Dr, Burnaby, BC",
-  "3451 Regent St, Richmond, BC",
-  "9088 Jones Rd, Richmond, BC",
-  "5998 131a St, Surrey, BC",
-  "2598 Kitchener St, Vancouver, BC",
-  "100 W 15th Ave, Vancouver, BC",
-  "32470 Haida Dr, Abbotsford, BC",
-  "6565 Greenmount St, Chilliwack, BC"
+  "7303 Montecito Drive, Burnaby, BC",
+  "3451 Regent Street, Richmond, BC",
+  "9088 Jones Road, Richmond, BC",
+  "5998 131a Street, Surrey, BC",
+  "2598 Kitchener Street, Vancouver, BC",
+  "100 W 15th Avenue, Vancouver, BC",
+  "32470 Haida Drive, Abbotsford, BC",
+  "6565 Greenmount Street, Chilliwack, BC"
 ]
+
+puts addresses.length
 
 User.create(
   name: "Mark",
@@ -34,10 +36,12 @@ User.create(
   password: pass,
   password_confirmation: pass,
   address: "2725 Prince Edward Street, Vancouver, BC",
+  range: 5,
   about: "I was once an urban farmer, now I'm growing my skills as a web developer. Still passionate for produce and love to trade here on Vegex",
   completion: 100,
   slots: 10
 )
+
 addresses.each do
   name = Faker::Name.first_name
   email = "#{name}#{rand(1..5)}@example.com"
@@ -47,14 +51,16 @@ addresses.each do
     password: pass,
     password_confirmation: pass,
     address: addresses.pop,
+    range: rand(1..20),
     about: Faker::Hipster.paragraph,
     completion: rand(50..100),
     slots: 1
   )
+  sleep(5)
 end
 
 users = User.all
-veg = [
+veglist = [
   "acorn squash",
   "alfalfa sprout",
   "amaranth",
@@ -176,12 +182,40 @@ veg = [
   "yam",
   "zucchini"
 ]
-lessveg = ["carrots", "lettuce", "potatoes", "kale", "mushrooms", "tomatoes", "broccoli", "celery"]
+vegicons = [
+  'asparagus',
+  'bean',
+  'beet',
+  'broccoli',
+  'carrot',
+  'cauliflower',
+  'celery',
+  'corn',
+  'cucumber',
+  'eggplant',
+  'garlic',
+  'greens',
+  'hot-pepper',
+  'kohlrabi',
+  'leek',
+  'lettuce',
+  'mushroom',
+  'onion',
+  'pea',
+  'pepper',
+  'potato',
+  'pumpkin',
+  'radish',
+  'squash',
+  'sweet-potato',
+  'tomato'
+]
+
 users.each do |user|
   Trade.create(
     user_id: user.id,
-    produce: lessveg.sample
+    produce: vegicons.sample
   )
 end
 
-puts "Created #{User.count} users | #{Trade.count} trades"
+puts "Created #{User.count} users from #{addresses.length} addresses | #{Trade.count} trades"

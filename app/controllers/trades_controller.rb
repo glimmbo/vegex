@@ -3,7 +3,7 @@ class TradesController < ApplicationController
 
   def index # open trades
     
-    if params[:search] #need to make form that does "get" with params[:search]
+    if params[:search] #need to make form that does GET with params[:search]
       trades = Trade.available.where(["produce ILIKE ? and user_id != ?", params[:search], current_user.id])
     else
       trades = Trade.available.where.not(user_id: current_user.id).order(:produce)
@@ -24,7 +24,7 @@ class TradesController < ApplicationController
     }, status: 200
   end
 
-  def show
+  def show # trade room
     trade = Trade.find(params[:id])
     partner = User.find(trade.offer_user_id)
 
@@ -35,7 +35,6 @@ class TradesController < ApplicationController
   end
 
   def my # active trades
-    # byebug
     trades = Trade
       .where({user_id: current_user.id, aasm_state: [:open, :barter, :pending]})
       .as_json(include: {offers: {include: :user}})
@@ -57,7 +56,7 @@ class TradesController < ApplicationController
       trade.produce = trade_params[:produce]
       if trade.save
         render json: {
-          id: trade.id
+          trade: trade
         }, status: 200
       else
         render json: {
@@ -73,12 +72,11 @@ class TradesController < ApplicationController
 
   def update # trade room actions
     # owner cancels
-      # owner sends "cancel" param.
+      # TODO
     # quantity changes (by either)
-      
+      # TODO
     # offer_user enter/leave
     trade = Trade.find(trade_params[:id])
-    # byebug
     if trade_params[:owner_cancel]
       if trade.cancel?
         respond json: {status: 200}
